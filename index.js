@@ -7,6 +7,7 @@
 //    * вытищть логин компонент в отдельный модуль (+)
 //    * TODO: вытащить компонент списка задач и форму добавления в отдельный модуль
 // 2. Реализовать форму регистрации (+)
+import { format } from "date-fns";
 
 import { addTodo, deleteTodo, getTodos } from "./api.js";
 import { renderLoginComponent } from "./components/login-component.js";
@@ -57,6 +58,7 @@ const renderApp = () => {
   
   const tasksHtml = tasks
       .map((task) => {
+        const createDate = format(new Date(task.created_at), 'dd/MM/yyyy hh:mm');
         return `
             <li class="task">
               <p class="task-text">
@@ -65,7 +67,7 @@ const renderApp = () => {
                   task.id
                 }" class="button delete-button">Удалить</button>
               </p>
-              <p><i>Задача создана: ${country === "ru" ? formatDateToRu(new Date(task.created_at)) : formatDateToUs(new Date(task.created_at))}</i></p>
+              <p><i>Задача создана: ${createDate}</i></p>
             </li>`;
       })
       .join("");
